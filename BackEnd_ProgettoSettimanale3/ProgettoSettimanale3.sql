@@ -10,7 +10,8 @@ CREATE TABLE Anagrafiche (
 	Indirizzo NVARCHAR(100) NOT NULL,
 	Citta NVARCHAR(100) NOT NULL,
 	CAP INT NOT NULL,
-	CodiceFiscale NVARCHAR(16) NOT NULL
+	CodiceFiscale NVARCHAR(16) NOT NULL,
+	CONSTRAINT CK_CodiceFiscale CHECK (LEN(CodiceFiscale) = 16)
 );
 
 --Creo la tabella Dei tipi di violazione
@@ -32,6 +33,7 @@ CREATE TABLE Verbali (
 	DecurtamentoPunti INT,
 	IdAnagrafica UNIQUEIDENTIFIER,
 	IdViolazione UNIQUEIDENTIFIER,
+	CONSTRAINT CK_Importo CHECK (Importo > 0),
 	CONSTRAINT PK_IdVerbaliComposto PRIMARY KEY (IdVerbale, IdAnagrafica, IdViolazione),
 	CONSTRAINT FK_Verbale_Anagrafica FOREIGN KEY (IdAnagrafica) REFERENCES Anagrafiche(IdAnagrafica),
 	CONSTRAINT FK_Verbale_Violazione FOREIGN KEY (IdViolazione) REFERENCES [Tipi Violazione](IdViolazione),
